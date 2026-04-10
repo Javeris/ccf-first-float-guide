@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your First Float, Explained — Central Coast Float</title>
+  <meta name="description" content="Everything you need to know before you get in the pod." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-linen: #faf7f2; --bg-white: #ffffff; --blue-primary: #2B5A8E;
+      --blue-dark: #1e3f66; --blue-hover: #24508a; --sage: #5a8a6a;
+      --border: #e8e0d6; --text-dark: #3a3a3a; --text-mid: #5a5a5a; --text-faint: #888;
+      --shadow-card: 0 1px 12px rgba(43,36,32,0.05); --shadow-lift: 0 4px 20px rgba(43,36,32,0.10);
+      --radius-card: 14px; --radius-btn: 50px; --max-w: 1000px;
+      --section-pad-v: 100px; --section-pad-h: 24px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 15px; line-height: 1.75; color: var(--text-dark); background: var(--bg-linen); -webkit-font-smoothing: antialiased; }
+    h1,h2,h3,h4 { font-family: 'Lora', serif; font-style: italic; font-weight: 400; line-height: 1.2; color: var(--text-dark); }
+    p { margin-bottom: 1em; } p:last-child { margin-bottom: 0; }
+    img { display: block; max-width: 100%; }
+    a { color: var(--blue-primary); text-decoration: none; }
+    .site-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; transition: all 0.35s ease; }
+    .site-bar.scrolled { background: rgba(250,247,242,0.96); backdrop-filter: blur(12px); box-shadow: 0 1px 24px rgba(43,36,32,0.06); padding: 14px 40px; }
+    .site-bar__logo { font-family: 'Lora', serif; font-style: italic; font-size: 17px; color: white; transition: color 0.35s ease; }
+    .site-bar.scrolled .site-bar__logo { color: var(--blue-dark); }
+    .site-bar__cta { display: inline-block; padding: 10px 24px; border-radius: var(--radius-btn); font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 500; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.4); color: white; backdrop-filter: blur(8px); transition: all 0.25s ease; }
+    .site-bar.scrolled .site-bar__cta { background: var(--blue-primary); border-color: var(--blue-primary); }
+    .btn { display: inline-block; padding: 13px 30px; border-radius: var(--radius-btn); font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; text-align: center; transition: all 0.25s ease; border: none; text-decoration: none; }
+    .btn-primary { background: var(--blue-primary); color: white; }
+    .btn-primary:hover { background: var(--blue-hover); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(43,90,142,0.30); color: white; }
+    .btn-hero { padding: 16px 36px; font-size: 15px; background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.38); color: white; backdrop-filter: blur(12px); }
+    .btn-hero:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); color: white; }
+    .btn-solid-hero { padding: 16px 36px; font-size: 15px; background: var(--blue-primary); color: white; }
+    .btn-solid-hero:hover { background: var(--blue-dark); transform: translateY(-2px); color: white; }
+    .section { padding: var(--section-pad-v) var(--section-pad-h); }
+    .section--cream { background: var(--bg-linen); }
+    .container { max-width: var(--max-w); margin: 0 auto; }
+    .container--narrow { max-width: 700px; margin: 0 auto; }
+    .eyebrow { display: block; font-family: 'Poppins', sans-serif; font-style: normal; font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--sage); margin-bottom: 16px; opacity: 0.85; }
+    .section-heading { font-size: clamp(28px,4vw,38px); margin-bottom: 28px; }
+    .section-heading--lg { font-size: clamp(32px,5vw,44px); }
+    .section-body { font-size: 15px; line-height: 1.8; color: var(--text-mid); max-width: 600px; }
+    .divider { width: 48px; height: 2px; background: var(--border); margin: 0 auto 40px; border-radius: 2px; }
+    .divider--left { margin-left: 0; }
+    .text-center { text-align: center; } .text-center .section-body { margin: 0 auto; }
+    .img-break { position: relative; min-height: 70vh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: var(--section-pad-v) var(--section-pad-h); }
+    .img-break__bg { position: absolute; inset: 0; background-size: cover; background-position: center; background-attachment: fixed; }
+    .img-break__overlay { position: absolute; inset: 0; }
+    .img-break__content { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; text-align: center; color: white; }
+    .img-break__content h2 { color: white; font-size: clamp(30px,5vw,48px); margin-bottom: 20px; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .img-break__content p { font-size: 16px; line-height: 1.8; opacity: 0.92; font-weight: 300; text-shadow: 0 1px 8px rgba(0,0,0,0.25); }
+    .img-break__eyebrow { display: block; font-family: 'Poppins', sans-serif; font-style: normal; font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
+    #hero { position: relative; min-height: 100svh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 120px 24px 80px; }
+    #hero .hero-bg { position: absolute; inset: 0; background: url('../Images/Float/CCFloatJuly2025-30 copy.jpg') center/cover no-repeat; transform: scale(1.03); transition: transform 8s ease-out; }
+    #hero .hero-overlay { position: absolute; inset: 0; background: linear-gradient(170deg,rgba(0,0,0,0.52) 0%,rgba(0,0,0,0.38) 50%,rgba(0,0,0,0.55) 100%); }
+    .hero-content { position: relative; z-index: 2; text-align: center; color: white; max-width: 720px; }
+    .hero-eyebrow { font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 3.5px; text-transform: uppercase; color: rgba(255,255,255,0.72); display: block; margin-bottom: 20px; }
+    .hero-content h1 { font-size: clamp(38px,7vw,60px); color: white; line-height: 1.15; margin-bottom: 20px; text-shadow: 0 2px 30px rgba(0,0,0,0.25); }
+    .hero-content p { font-size: 17px; font-weight: 300; opacity: 0.88; line-height: 1.7; margin-bottom: 40px; }
+    .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .hero-trust { margin-top: 52px; font-size: 12px; font-weight: 400; opacity: 0.62; letter-spacing: 0.5px; }
+    #what-is-floating .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    #what-is-floating .intro-image { border-radius: 12px; overflow: hidden; aspect-ratio: 4/5; box-shadow: var(--shadow-lift); }
+    #what-is-floating .intro-image img { width: 100%; height: 100%; object-fit: cover; }
+    .stat-row { display: flex; gap: 32px; margin-top: 36px; flex-wrap: wrap; }
+    .stat-item { display: flex; flex-direction: column; gap: 4px; }
+    .stat-value { font-family: 'Lora', serif; font-style: italic; font-size: 28px; color: var(--blue-primary); line-height: 1; }
+    .stat-label { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); }
+    .reassurance-box { background: white; border-radius: var(--radius-card); border: 1px solid var(--border); padding: 52px 56px; max-width: 760px; margin: 0 auto; box-shadow: var(--shadow-card); }
+    .reassurance-box .check-list { list-style: none; margin-top: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .reassurance-box .check-list li { display: flex; align-items: flex-start; gap: 14px; font-size: 15px; line-height: 1.65; color: var(--text-mid); }
+    .check-icon { width: 22px; height: 22px; min-width: 22px; border-radius: 50%; background: #eef3f7; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+    .check-icon svg { width: 12px; height: 12px; }
+    #after-float .after-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 48px; }
+    .after-card { background: white; border-radius: var(--radius-card); padding: 32px 28px; box-shadow: var(--shadow-card); border: 1px solid var(--border); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .after-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+    .after-card__icon { width: 40px; height: 40px; background: #eef3f7; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .after-card__icon svg { width: 20px; height: 20px; stroke: var(--blue-primary); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .after-card h4 { font-size: 17px; font-family: 'Lora', serif; font-style: italic; margin-bottom: 10px; }
+    .after-card p { font-size: 14px; color: var(--text-mid); line-height: 1.7; }
+    #tips-section .tips-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; margin-top: 48px; }
+    .tip-card { background: white; border-radius: var(--radius-card); border: 1px solid var(--border); padding: 28px 28px 28px 24px; display: flex; gap: 18px; align-items: flex-start; box-shadow: var(--shadow-card); transition: box-shadow 0.2s ease; }
+    .tip-card:hover { box-shadow: var(--shadow-lift); }
+    .tip-number { width: 32px; height: 32px; min-width: 32px; border-radius: 50%; background: var(--blue-primary); color: white; font-family: 'Lora', serif; font-style: italic; font-size: 15px; display: flex; align-items: center; justify-content: center; }
+    .tip-card__body h4 { font-family: 'Poppins', sans-serif; font-style: normal; font-size: 13px; font-weight: 500; color: var(--text-dark); margin-bottom: 4px; }
+    .tip-card__body p { font-size: 13px; color: var(--text-mid); line-height: 1.65; margin: 0; }
+    #faq { background: var(--bg-linen); }
+    .faq-list { max-width: 760px; margin: 48px auto 0; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+    .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; cursor: pointer; gap: 20px; user-select: none; }
+    .faq-question span { font-family: 'Poppins', sans-serif; font-style: normal; font-size: 15px; font-weight: 400; color: var(--text-dark); line-height: 1.5; }
+    .faq-toggle { width: 28px; height: 28px; min-width: 28px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; transition: all 0.25s ease; color: var(--text-mid); }
+    .faq-item.open .faq-toggle { background: var(--blue-primary); border-color: var(--blue-primary); color: white; transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-answer p { padding-bottom: 24px; font-size: 14px; color: var(--text-mid); line-height: 1.8; margin: 0; }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .site-footer { background: var(--blue-dark); padding: 40px 24px; text-align: center; color: rgba(255,255,255,0.55); font-size: 12px; }
+    .site-footer a { color: rgba(255,255,255,0.75); }
+    .footer-logo { font-family: 'Lora', serif; font-style: italic; font-size: 20px; color: white; margin-bottom: 12px; }
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 768px) {
+      :root { --section-pad-v: 64px; --section-pad-h: 20px; }
+      .site-bar { padding: 16px 20px; } .site-bar.scrolled { padding: 14px 20px; }
+      #hero { padding: 100px 20px 60px; } .hero-content h1 { font-size: 36px; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .btn-hero, .btn-solid-hero { width: 100%; max-width: 300px; }
+      #what-is-floating .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+      #what-is-floating .intro-image { aspect-ratio: 16/9; }
+      .reassurance-box { padding: 36px 28px; }
+      #after-float .after-grid { grid-template-columns: 1fr; }
+      #tips-section .tips-grid { grid-template-columns: 1fr; }
+      .img-break { min-height: 60vh; } .img-break__bg { background-attachment: scroll; }
+      .faq-question span { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-bar" id="siteBar">
+    <span class="site-bar__logo">Central Coast Float</span>
+    <a href="https://centralcoastfloat.com.au/book" class="site-bar__cta btn" target="_blank" rel="noopener">Book Now</a>
+  </header>
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content fade-up">
+      <span class="hero-eyebrow">Central Coast Float · Est. 2015</span>
+      <h1>Your first float,<br>explained.</h1>
+      <p>Everything you need to know before you get in the pod.</p>
+      <div class="hero-actions">
+        <a href="https://centralcoastfloat.com.au/book" class="btn btn-solid-hero" target="_blank" rel="noopener">Book Your First Float</a>
+        <a href="#what-is-floating" class="btn btn-hero">Read the guide ↓</a>
+      </div>
+      <p class="hero-trust">Central Coast's home of floating · Over 10 years · 300+ Google reviews</p>
+    </div>
+  </section>
+  <section class="section section--cream" id="what-is-floating">
+    <div class="container">
+      <div class="intro-grid">
+        <div class="intro-image"><img src="../Images/Float/CCFloatJuly2025-24 copy.jpg" alt="Float therapy at Central Coast Float" loading="lazy" /></div>
+        <div>
+          <span class="eyebrow">What is floating</span>
+          <h2 class="section-heading">60 minutes of complete stillness.</h2>
+          <div class="divider divider--left"></div>
+          <p class="section-body">Floating is simple. You lie back in warm saltwater and you don't do anything. The water is skin temperature. The room is dark. It's quiet.</p>
+          <p class="section-body">Six hundred kilograms of dissolved Epsom salt makes the water so dense your body floats effortlessly — no kicking, no effort, no tension.</p>
+          <p class="section-body">We've been delivering float therapy to Central Coast locals for over 10 years. There's nothing to learn.</p>
+          <div class="stat-row">
+            <div class="stat-item"><span class="stat-value">600kg</span><span class="stat-label">Epsom Salt</span></div>
+            <div class="stat-item"><span class="stat-value">60 min</span><span class="stat-label">Standard Float</span></div>
+            <div class="stat-item"><span class="stat-value">10 yrs</span><span class="stat-label">Established</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="img-break">
+    <div class="img-break__bg" style="background-image:url('../Images/Float/0Y7A0301 copy.JPG')"></div>
+    <div class="img-break__overlay" style="background:linear-gradient(135deg,rgba(0,0,0,0.58) 0%,rgba(0,0,0,0.38) 60%,rgba(0,0,0,0.55) 100%)"></div>
+    <div class="img-break__content fade-up">
+      <span class="img-break__eyebrow">Inside the pod</span>
+      <h2>Bigger than you expect.</h2>
+      <p>Roughly the size of a small car — tall enough to sit up in, wide enough to spread your arms.</p>
+      <p style="margin-top:12px">You don't have to close the lid. You are in complete control from the moment you step in.</p>
+    </div>
+  </div>
+  <section class="section section--cream">
+    <div class="container--narrow text-center fade-up">
+      <span class="eyebrow">The sensation</span>
+      <h2 class="section-heading section-heading--lg">What the water feels like.</h2>
+      <div class="divider"></div>
+      <p class="section-body" style="font-size:16px;line-height:1.9">Skin temperature. After a few minutes, you stop noticing where your body ends and the water begins.</p>
+      <p class="section-body" style="font-size:16px;line-height:1.9">The salt holds you up completely. No kicking, no bracing. You just exist.</p>
+      <p class="section-body" style="font-size:16px;line-height:1.9;margin-top:8px">Most people stop noticing the water entirely. What's left is stillness.</p>
+    </div>
+  </section>
+  <div class="img-break">
+    <div class="img-break__bg" style="background-image:url('../Images/Float/0Y7A0325 copy.JPG');background-position:center 40%"></div>
+    <div class="img-break__overlay" style="background:linear-gradient(170deg,rgba(10,20,40,0.62) 0%,rgba(10,20,40,0.42) 55%,rgba(10,20,40,0.60) 100%)"></div>
+    <div class="img-break__content fade-up">
+      <span class="img-break__eyebrow">The mental shift</span>
+      <h2>What happens to your mind.</h2>
+      <p>Not all at once. First the noise softens. Then the to-do list fades.</p>
+      <p style="margin-top:12px">Then there's just quiet. Your brain stops scanning for threats. It trusts the stillness.</p>
+      <p style="margin-top:12px;opacity:0.75">Researchers call it the theta state — the same deep rest that happens just before sleep.</p>
+    </div>
+  </div>
+  <section class="section section--cream" id="nervous">
+    <div class="container">
+      <div class="text-center fade-up" style="margin-bottom:48px">
+        <span class="eyebrow">If you're nervous</span>
+        <h2 class="section-heading">Not as small as you think.</h2>
+        <div class="divider"></div>
+        <p class="section-body" style="margin:0 auto;max-width:560px">Claustrophobia is the most common concern. Here's what people say after.</p>
+      </div>
+      <div class="reassurance-box fade-up">
+        <h3 style="font-size:20px;color:var(--blue-dark);margin-bottom:8px">You are always in control.</h3>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.8">The space is larger than most expect. The pod is never locked.</p>
+        <ul class="check-list">
+          <li><span class="check-icon"><svg viewBox="0 0 12 12" fill="none" stroke="#2B5A8E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span><span>The pod is large — tall enough to sit up in, wide enough to spread your arms.</span></li>
+          <li><span class="check-icon"><svg viewBox="0 0 12 12" fill="none" stroke="#2B5A8E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span><span>The lid is never locked. Open it, leave it up, or step out at any point.</span></li>
+          <li><span class="check-icon"><svg viewBox="0 0 12 12" fill="none" stroke="#2B5A8E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span><span>An interior light stays on until you're ready to turn it off.</span></li>
+          <li><span class="check-icon"><svg viewBox="0 0 12 12" fill="none" stroke="#2B5A8E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span><span>Most people who arrived nervous say it wasn't an issue once inside.</span></li>
+          <li><span class="check-icon"><svg viewBox="0 0 12 12" fill="none" stroke="#2B5A8E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></span><span>A call button is inside the pod if you need anything.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <div class="img-break">
+    <div class="img-break__bg" style="background-image:url('../Images/Float/Couples_1 copy.JPG')"></div>
+    <div class="img-break__overlay" style="background:linear-gradient(160deg,rgba(15,30,55,0.62) 0%,rgba(15,30,55,0.38) 55%,rgba(15,30,55,0.58) 100%)"></div>
+    <div class="img-break__content fade-up">
+      <span class="img-break__eyebrow">Float together</span>
+      <h2>The Couples Pod.</h2>
+      <p>We also have an extra-large pod for two. Float together. Decompress together.</p>
+      <p style="margin-top:12px">A genuinely different way to spend time with someone you care about.</p>
+      <div style="margin-top:40px"><a href="https://centralcoastfloat.com.au/book" class="btn btn-hero" target="_blank" rel="noopener">Book the Couples Pod</a></div>
+    </div>
+  </div>
+  <section class="section section--cream" id="after-float">
+    <div class="container">
+      <div class="text-center fade-up">
+        <span class="eyebrow">After your session</span>
+        <h2 class="section-heading">How you'll feel.</h2>
+        <div class="divider"></div>
+        <p class="section-body" style="margin:0 auto;max-width:560px">Clear-headed. Unhurried. Like something heavy has been quietly put down.</p>
+      </div>
+      <div class="after-grid">
+        <div class="after-card fade-up"><div class="after-card__icon"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg></div><h4>Deeply rested.</h4><p>The kind of rest that usually takes a full night's sleep — without sleeping.</p></div>
+        <div class="after-card fade-up"><div class="after-card__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div><h4>Clear-headed.</h4><p>That mental fog lifts. You'll feel it for the rest of the day.</p></div>
+        <div class="after-card fade-up"><div class="after-card__icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><h4>At ease in your body.</h4><p>Tension you didn't know you were holding is gone. The effect often lasts days.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="tips-section" style="background:white">
+    <div class="container">
+      <div class="text-center fade-up">
+        <span class="eyebrow">Before you arrive</span>
+        <h2 class="section-heading">A few practical things.</h2>
+        <div class="divider"></div>
+        <p class="section-body" style="margin:0 auto">No experience needed. Just a handful of things that make your first float even better.</p>
+      </div>
+      <div class="tips-grid fade-up">
+        <div class="tip-card"><div class="tip-number">1</div><div class="tip-card__body"><h4>Skip the razor</h4><p>Don't shave or wax in the 12 hours before. The salt can sting.</p></div></div>
+        <div class="tip-card"><div class="tip-number">2</div><div class="tip-card__body"><h4>Eat lightly beforehand</h4><p>A light meal 1–2 hours before is ideal.</p></div></div>
+        <div class="tip-card"><div class="tip-number">3</div><div class="tip-card__body"><h4>Arrive 10 minutes early</h4><p>We'll walk you through everything on your first visit.</p></div></div>
+        <div class="tip-card"><div class="tip-number">4</div><div class="tip-card__body"><h4>We provide everything</h4><p>Towels, earplugs, body wash, shampoo — all included.</p></div></div>
+        <div class="tip-card"><div class="tip-number">5</div><div class="tip-card__body"><h4>Wear nothing inside</h4><p>Each pod is in its own private room. Most people float without a swimsuit.</p></div></div>
+        <div class="tip-card"><div class="tip-number">6</div><div class="tip-card__body"><h4>Nothing to learn</h4><p>Don't meditate, don't try. Just get in and let go.</p></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="faq" style="background:var(--bg-linen)">
+    <div class="container">
+      <div class="text-center fade-up">
+        <span class="eyebrow">Common questions</span>
+        <h2 class="section-heading">What people ask us.</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="faq-list fade-up">
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>Do I need to be able to swim?</span><div class="faq-toggle"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5.5" y1="1" x2="5.5" y2="10"/><line x1="1" y1="5.5" x2="10" y2="5.5"/></svg></div></div><div class="faq-answer"><p>Not at all. The salt makes it so buoyant that floating is completely effortless.</p></div></div>
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>What do I wear inside the pod?</span><div class="faq-toggle"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5.5" y1="1" x2="5.5" y2="10"/><line x1="1" y1="5.5" x2="10" y2="5.5"/></svg></div></div><div class="faq-answer"><p>Nothing. Each pod is in its own completely private room with a shower.</p></div></div>
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>What if I fall asleep?</span><div class="faq-toggle"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5.5" y1="1" x2="5.5" y2="10"/><line x1="1" y1="5.5" x2="10" y2="5.5"/></svg></div></div><div class="faq-answer"><p>Very common and completely safe. The buoyancy keeps you floating on your back regardless.</p></div></div>
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>Is the water clean?</span><div class="faq-toggle"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5.5" y1="1" x2="5.5" y2="10"/><line x1="1" y1="5.5" x2="10" y2="5.5"/></svg></div></div><div class="faq-answer"><p>Yes — extremely. Filtered and treated with UV and hydrogen peroxide between every float.</p></div></div>
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>How long is a session?</span><div class="faq-toggle"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5.5" y1="1" x2="5.5" y2="10"/><line x1="1" y1="5.5" x2="10" y2="5.5"/></svg></div></div><div class="faq-answer"><p>60 minutes standard. 90-minute sessions also available.</p></div></div>
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span>Can I float if I'm pregnant?</span><div class="faq-toggle"><svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5.5" y1="1" x2="5.5" y2="10"/><line x1="1" y1="5.5" x2="10" y2="5.5"/></svg></div></div><div class="faq-answer"><p>Many pregnant women find it deeply relieving. Check with your doctor first.</p></div></div>
+      </div>
+    </div>
+  </section>
+  <div class="img-break" style="min-height:80vh">
+    <div class="img-break__bg" style="background-image:url('../Images/Float/GoodGraham copy.JPG');background-position:center 30%"></div>
+    <div class="img-break__overlay" style="background:linear-gradient(170deg,rgba(0,0,0,0.60) 0%,rgba(0,0,0,0.42) 60%,rgba(0,0,0,0.60) 100%)"></div>
+    <div class="img-break__content fade-up">
+      <span class="img-break__eyebrow">Central Coast Float</span>
+      <h2 style="font-size:clamp(36px,6vw,56px)">Ready to try it?</h2>
+      <p style="font-size:17px;margin-bottom:40px">Central Coast's home of floating — for over 10 years.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <a href="https://centralcoastfloat.com.au/book" class="btn btn-primary" style="font-size:15px;padding:16px 40px" target="_blank" rel="noopener">Book Your First Float →</a>
+        <a href="https://centralcoastfloat.com.au" class="btn btn-hero" style="font-size:14px" target="_blank" rel="noopener">centralcoastfloat.com.au</a>
+      </div>
+      <p style="margin-top:36px;font-size:13px;opacity:0.55">Umina Beach, Central Coast NSW</p>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-logo">Central Coast Float</div>
+    <p><a href="https://centralcoastfloat.com.au" target="_blank" rel="noopener">centralcoastfloat.com.au</a></p>
+    <p style="margin-top:8px">Umina Beach, Central Coast NSW · Float therapy since 2015</p>
+  </footer>
+  <script>
+    const siteBar = document.getElementById('siteBar');
+    window.addEventListener('scroll', () => { siteBar.classList.toggle('scrolled', window.scrollY > 60); }, {passive:true});
+    function toggleFaq(q) { const item = q.parentElement; const was = item.classList.contains('open'); document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open')); if (!was) item.classList.add('open'); }
+    const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { const d = e.target.closest('.tips-grid,.after-grid') ? Array.from(e.target.parentElement.children).indexOf(e.target)*80 : 0; setTimeout(() => e.target.classList.add('visible'), d); obs.unobserve(e.target); } }); }, {threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+    window.addEventListener('load', () => { const bg = document.getElementById('heroBg'); if (bg) bg.style.transform = 'scale(1)'; });
+  </script>
+</body>
+</html>
