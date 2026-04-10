@@ -31,8 +31,8 @@
     .site-bar__cta { display: inline-block; padding: 10px 24px; border-radius: var(--radius-btn); font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 500; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.4); color: white; backdrop-filter: blur(8px); transition: all 0.25s ease; }
     .site-bar.scrolled .site-bar__cta { background: var(--blue-primary); border-color: var(--blue-primary); }
     .btn { display: inline-block; padding: 13px 30px; border-radius: var(--radius-btn); font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; text-align: center; transition: all 0.25s ease; border: none; text-decoration: none; }
-    .btn-primary { background: var(--blue-primary); color: white; }
-    .btn-primary:hover { background: var(--blue-hover); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(43,90,142,0.30); color: white; }
+    .btn-primary { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35); color: white; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .btn-primary:hover { background: rgba(255,255,255,0.25); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); color: white; }
     .btn-hero { padding: 16px 36px; font-size: 15px; background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.38); color: white; backdrop-filter: blur(12px); }
     .btn-hero:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); color: white; }
     .btn-solid-hero { padding: 16px 36px; font-size: 15px; background: var(--blue-primary); color: white; }
@@ -100,9 +100,10 @@
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
     .faq-answer p { padding-bottom: 24px; font-size: 14px; color: var(--text-mid); line-height: 1.8; margin: 0; }
     .faq-item.open .faq-answer { max-height: 200px; }
-    .site-footer { background: var(--blue-dark); padding: 40px 24px; text-align: center; color: rgba(255,255,255,0.55); font-size: 12px; }
-    .site-footer a { color: rgba(255,255,255,0.75); }
-    .footer-logo { font-family: 'Lora', serif; font-style: italic; font-size: 20px; color: white; margin-bottom: 12px; }
+    .site-footer { background: var(--bg-linen); border-top: 1px solid var(--border); padding: 48px 24px; text-align: center; color: var(--text-mid); font-size: 12px; }
+    .site-footer a { color: var(--text-mid); }
+    .site-footer a:hover { color: var(--text-dark); }
+    .footer-logo { font-family: 'Lora', serif; font-style: italic; font-size: 20px; color: var(--text-dark); margin-bottom: 12px; }
     .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
     @media (max-width: 768px) {
